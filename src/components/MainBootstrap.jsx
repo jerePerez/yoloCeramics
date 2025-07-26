@@ -6,7 +6,7 @@ function MainBootstrap() {
       <Row className="align-items-center">
         <Col xs={12} md={4} lg={4}>
           <Image
-            src="../public/imagenes/llamita.jpg"
+            src="../src/assets/llamita.jpg"
             alt="Imagen ilustrativa"
             fluid
             rounded
