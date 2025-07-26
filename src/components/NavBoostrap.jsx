@@ -13,7 +13,7 @@ function NavBoostrap() {
     <Navbar bg="dark" variant="dark" expand="lg" sticky="top">
       <Container>
         <Navbar.Brand as={Link} to="/">
-          Mi Tienda
+          Yolo Ceramics
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="nav-principal" />
         <Navbar.Collapse id="nav-principal">

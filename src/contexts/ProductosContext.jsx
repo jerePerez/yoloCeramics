@@ -7,9 +7,9 @@ export function ProductosProvider({ children }) {
     const [productoEncontrado, setProductoEncontrado] = useState([])
 
     function obtenerProductos() {
-        return(
+        return (
             new Promise((res, rej) => {
-                fetch('https://68100d8b27f2fdac24101ef5.mockapi.io/productos')
+                fetch('https://68218c26259dad2655af8c41.mockapi.io/productos')
                     .then((respuesta) =>
                         respuesta.json()
                     )
@@ -23,81 +23,81 @@ export function ProductosProvider({ children }) {
                         console.log("Error", error)
                         rej(error)
                     })
-                ;
+                    ;
             })
         )
     }
 
     const agregarProducto = (producto) => {
-        return(
+        return (
             new Promise(async (res, rej) => {
                 try {
-                    const respuesta = await fetch('https://68100d8b27f2fdac24101ef5.mockapi.io/productos', {
+                    const respuesta = await fetch('https://68218c26259dad2655af8c41.mockapi.io/productos', {
                         method: 'POST',
                         headers: {
-                        'Content-Type': 'application/json',
+                            'Content-Type': 'application/json',
                         },
                         body: JSON.stringify(producto),
                     });
 
                     if (!respuesta.ok) {
-                            throw new Error('Error al agregar el producto.');
+                        throw new Error('Error al agregar el producto.');
                     }
                     const data = await respuesta.json();
-                            console.log('Producto agregado:', data);
-                            res(data)
-                            //alert('Producto agregado correctamente');
-                    } catch (error) {
-                        console.error(error.message);
-                        //alert('Hubo un problema al agregar el producto.');
-                        rej(error.message)
-                    }
+                    console.log('Producto agregado:', data);
+                    res(data)
+                    //alert('Producto agregado correctamente');
+                } catch (error) {
+                    console.error(error.message);
+                    //alert('Hubo un problema al agregar el producto.');
+                    rej(error.message)
+                }
             })
         )
     };
 
-    function obtenerProducto(id){
-        return(
+    function obtenerProducto(id) {
+        return (
             new Promise((res, rej) => {
-               fetch("https://68100d8b27f2fdac24101ef5.mockapi.io/productos")
-                .then((res) => res.json())
-                .then((datos) => {
-                    const productoEncontrado = datos.find((item) => item.id === id);
-                    if (productoEncontrado) {
-                    setProductoEncontrado(productoEncontrado);
-                    res(datos)
-                    } else {
-                        rej("Producto no encontrado")
-                    }
-                })
-                .catch((err) => {
-                    console.log("Error:", err);
-                    rej("Hubo un error al obtener el producto.");
-                }); 
+                fetch("https://68218c26259dad2655af8c41.mockapi.io/productos")
+                    .then((res) => res.json())
+                    .then((datos) => {
+                        const productoEncontrado = datos.find((item) => item.id === id);
+                        if (productoEncontrado) {
+                            setProductoEncontrado(productoEncontrado);
+                            res(datos)
+                        } else {
+                            rej("Producto no encontrado")
+                        }
+                    })
+                    .catch((err) => {
+                        console.log("Error:", err);
+                        rej("Hubo un error al obtener el producto.");
+                    });
             })
         )
     }
 
-    function editarProducto(producto){
-        return(
-            new Promise(async(res, rej) => {
-            try {
-                const respuesta = await fetch(`https://68100d8b27f2fdac24101ef5.mockapi.io/productos/${producto.id}`, {
-                    method: 'PUT',
-                    headers: {
-                    'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(producto),
-                });
-                if (!respuesta.ok) {
-                    throw new Error('Error al actualizar el producto.');
+    function editarProducto(producto) {
+        return (
+            new Promise(async (res, rej) => {
+                try {
+                    const respuesta = await fetch(`https://68218c26259dad2655af8c41.mockapi.io/productos/${producto.id}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(producto),
+                    });
+                    if (!respuesta.ok) {
+                        throw new Error('Error al actualizar el producto.');
+                    }
+                    const data = await respuesta.json();
+                    res(data)
+                } catch (error) {
+                    console.error(error.message);
+                    rej(error)
                 }
-                const data = await respuesta.json();
-                res(data)
-            } catch (error) {
-                console.error(error.message);
-                rej(error)
-            }
             })
         )
     }
@@ -105,11 +105,11 @@ export function ProductosProvider({ children }) {
     const eliminarProducto = (id) => {
         const confirmar = window.confirm('¿Estás seguro de eliminar?');
         if (confirmar) {
-            return(
+            return (
                 new Promise(async (res, rej) => {
                     try {
-                        const respuesta = await fetch(`https://68100d8b27f2fdac24101ef5.mockapi.io/productos/${id}`, {
-                        method: 'DELETE',
+                        const respuesta = await fetch(`https://68218c26259dad2655af8c41.mockapi.io/productos/${id}`, {
+                            method: 'DELETE',
                         });
                         if (!respuesta.ok) throw new Error('Error al eliminar');
                         alert('Producto eliminado correctamente.');
@@ -124,8 +124,8 @@ export function ProductosProvider({ children }) {
         }
     }
 
-    function filtrarProductos(filtro){
-        if(filtro.length < 0){
+    function filtrarProductos(filtro) {
+        if (filtro.length < 0) {
             setProductos(productosOriginales)
             return;
         }
@@ -138,8 +138,8 @@ export function ProductosProvider({ children }) {
 
     return (
         <ProductosContext.Provider value={{ filtrarProductos, obtenerProductos, productos, agregarProducto, obtenerProducto, productoEncontrado, editarProducto, eliminarProducto }}>
-        {children}
-        </ProductosContext.Provider> 
+            {children}
+        </ProductosContext.Provider>
     );
 }
 export const useProductosContext = () => useContext(ProductosContext);

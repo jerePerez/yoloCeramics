@@ -2,14 +2,15 @@ import { initializeApp } from "firebase/app";
 import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDYurvqxgCTQ92os8BvGnGAoE3g3YrTR0c",
-    authDomain: "prueba-auth-e64d8.firebaseapp.com",
-    projectId: "prueba-auth-e64d8",
-    storageBucket: "prueba-auth-e64d8.firebasestorage.app",
-    messagingSenderId: "1042020842950",
-    appId: "1:1042020842950:web:b2694d263646612bb606c7",
+    apiKey: "AIzaSyCfTzUhPtdfg3Xv2bHQ6fD13S3dACiBxVs",
+    authDomain: "react-talentotech.firebaseapp.com",
+    projectId: "react-talentotech",
+    storageBucket: "react-talentotech.firebasestorage.app",
+    messagingSenderId: "247295715263",
+    appId: "1:247295715263:web:2668d92fb057b848fc230a"
 };
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
 //////////////////////////////////////////////////////////////////////
@@ -19,71 +20,71 @@ const app = initializeApp(firebaseConfig);
 const provider = new GoogleAuthProvider();
 const auth = getAuth();
 
-export function crearUsuario(email, password){
-    return(
+export function crearUsuario(email, password) {
+    return (
         new Promise((res, rej) => {
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                // Signed up 
-                console.log("Credenciales", userCredential)
-                const user = userCredential.user;
-                console.log(user)
-                res(user)
-                // ...
-            })
-            .catch((error) => {
-                console.log(error.code, error.message)
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                rej(error)
-                // ..
-            });
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    // Signed up 
+                    console.log("Credenciales", userCredential)
+                    const user = userCredential.user;
+                    console.log(user)
+                    res(user)
+                    // ...
+                })
+                .catch((error) => {
+                    console.log(error.code, error.message)
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    rej(error)
+                    // ..
+                });
         })
     )
 }
 
 auth.useDeviceLanguage()
-export function logearG(){
+export function logearG() {
     signInWithPopup(auth, provider)
-    .then((result) => {
-        console.log("test", result)
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        // The signed-in user info.
-        const user = result.user;
-        // IdP data available using getAdditionalUserInfo(result)
-        // ...
-    }).catch((error) => {
-        console.log("test error", error )
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
-    });
+        .then((result) => {
+            console.log("test", result)
+            // This gives you a Google Access Token. You can use it to access the Google API.
+            const credential = GoogleAuthProvider.credentialFromResult(result);
+            const token = credential.accessToken;
+            // The signed-in user info.
+            const user = result.user;
+            // IdP data available using getAdditionalUserInfo(result)
+            // ...
+        }).catch((error) => {
+            console.log("test error", error)
+            // Handle Errors here.
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // The email of the user's account used.
+            const email = error.customData.email;
+            // The AuthCredential type that was used.
+            const credential = GoogleAuthProvider.credentialFromError(error);
+            // ...
+        });
 }
 
-export function loginEmailPass(email, password){
-    return(
+export function loginEmailPass(email, password) {
+    return (
         new Promise((res, rej) => {
             signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                // Signed in 
-                console.log("Credenciales", userCredential)
-                const user = userCredential.user;
-                console.log(user)
-                res(user)
-            })
-            .catch((error) => {
-                console.log(error.code)
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                rej(error)
-            });
+                .then((userCredential) => {
+                    // Signed in 
+                    console.log("Credenciales", userCredential)
+                    const user = userCredential.user;
+                    console.log(user)
+                    res(user)
+                })
+                .catch((error) => {
+                    console.log(error.code)
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    rej(error)
+                });
         })
     )
 }
@@ -98,45 +99,45 @@ const db = getFirestore(app);
 export function crearProducto(name, imagen, price, description) {
     return new Promise(async (res, rej) => {
         try {
-        const docRef = await addDoc(collection(db, "productos"), {
-            name: name,
-            imagen: imagen,
-            price: price,
-            description: description
-        });
+            const docRef = await addDoc(collection(db, "productos"), {
+                name: name,
+                imagen: imagen,
+                price: price,
+                description: description
+            });
 
-        console.log("Document written with ID: ", docRef.id);
-        res(docRef)
+            console.log("Document written with ID: ", docRef.id);
+            res(docRef)
 
         } catch (e) {
-        console.error("Error adding document: ", e);
-        rej(e)
+            console.error("Error adding document: ", e);
+            rej(e)
         }
     });
 }
 
 export function obtenerProductos() {
-    return(
+    return (
         new Promise(async (res, rej) => {
-                try {
-                    const querySnapshot = await getDocs(collection(db, "users"));
-                    
-                    const resultados = querySnapshot.docs.map(doc => {
-                        const data = doc.data();
-                        return {
-                            id: doc.id,
-                            name: data.name,
-                            imagen: data.imagen,
-                            price: data.price,
-                            description: data.description
-                        };
-                    });
+            try {
+                const querySnapshot = await getDocs(collection(db, "users"));
 
-                    res (resultados);
-                } catch (error) {
-                    console.error("Error al obtener los usuarios:", error);
-                    rej (error);
-                }
+                const resultados = querySnapshot.docs.map(doc => {
+                    const data = doc.data();
+                    return {
+                        id: doc.id,
+                        name: data.name,
+                        imagen: data.imagen,
+                        price: data.price,
+                        description: data.description
+                    };
+                });
+
+                res(resultados);
+            } catch (error) {
+                console.error("Error al obtener los usuarios:", error);
+                rej(error);
+            }
         })
     )
 }

@@ -1,12 +1,42 @@
-# React + Vite
+# 🛒 Carrito de Compras - Proyecto Talento Tech
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este proyecto es una **aplicación web de carrito de compras** desarrollada como parte del curso de **Talento Tech**, con el objetivo de poner en práctica los conocimientos adquiridos en desarrollo front-end utilizando **React**.
 
-Currently, two official plugins are available:
+## 🚀 Tecnologías utilizadas
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [React](https://react.dev/)
+- [React Router](https://reactrouter.com/)
+- [Bootstrap](https://getbootstrap.com/)
+- [SweetAlert2](https://sweetalert2.github.io/)
+- Context API de React para el manejo de estados globales (autenticación y carrito)
+- Firebase Authentication (opcional, si la estás usando)
 
-## Expanding the ESLint configuration
+## 📦 Funcionalidades principales
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Registro e inicio de sesión de usuarios
+- Agregar productos al carrito
+- Eliminar productos del carrito
+- Vaciar todo el carrito con confirmación
+- Visualizar el total a pagar
+- Finalizar la compra con mensaje de confirmación
+- Rutas protegidas para que solo usuarios logueados accedan al carrito
+
+## 🧠 Aprendizajes
+
+Durante el desarrollo de este proyecto, se practicaron habilidades como:
+
+- Manejo del estado con `useState`, `useContext` y `useEffect`
+- Creación y consumo de contextos (Context API)
+- Diseño responsive con Bootstrap
+- Enrutamiento y protección de rutas con React Router
+- Uso de librerías externas como SweetAlert para mejorar la experiencia del usuario
+
+## 👨‍💻 Autor
+
+Este proyecto fue realizado como parte del proceso de aprendizaje en el curso REACT JS de **Talento Tech**.  
+Desarrollado por: Santiago Jeremías Pérez Lourenco  
+Año: 2025
+
+---
+
+¡Gracias por visitar este repositorio!

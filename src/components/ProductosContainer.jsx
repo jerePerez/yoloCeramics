@@ -1,59 +1,61 @@
 import { useEffect, useState } from "react"
 import "../styles/Productos.css"
 import { useProductosContext } from "../contexts/ProductosContext"
-import { useAuthContext } from "../contexts/AuthContext"
 import { Helmet } from "react-helmet";
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import Container from 'react-bootstrap/Container';
 import CardProducto from "./Card"
 import { FaSearch } from "react-icons/fa";
 
-
-function ProductosContainer({}){
-    const {productos, obtenerProductos, filtrarProductos} = useProductosContext();
-/////////////////////////////////
+function ProductosContainer() {
+    const { productos, obtenerProductos, filtrarProductos } = useProductosContext();
     const productosPorPagina = 8;
     const [paginaActual, setPaginaActual] = useState(1);
-    // Calcular el índice de los productos a mostrar en la página actual
     const indiceUltimoProducto = paginaActual * productosPorPagina;
     const indicePrimerProducto = indiceUltimoProducto - productosPorPagina;
     const productosActuales = productos.slice(indicePrimerProducto, indiceUltimoProducto);
-//////////////////////////////
-//Paginacion////////////////////////
 
     const [cargando, setCargando] = useState(true);
     const [error, setError] = useState(null);
     const [filtro, setFiltro] = useState("")
 
-    {useEffect(() => {
-        obtenerProductos().then((productos) => {
-            setCargando(false);
-        }).catch((error) => {
+    useEffect(() => {
+        obtenerProductos().then(() => {
+            setTimeout(() => {
+                setCargando(false);
+            }, 2000);
+        }).catch(() => {
             setError('Hubo un problema al cargar los productos.');
             setCargando(false);
         })
-    }, []);}
+    }, []);
 
     useEffect(() => {
         filtrarProductos(filtro)
-    },[filtro])//filtro
+    }, [filtro]);
 
     const totalPaginas = Math.ceil(productos.length / productosPorPagina);
     const cambiarPagina = (numeroPagina) => setPaginaActual(numeroPagina);
 
-
     if (cargando) {
-        return <p>Cargando productos...</p>;
-    }else if (error){
+        return (
+            <div className="d-flex justify-content-center align-items-center vh-100">
+                <div className="loader"></div>
+            </div>
+        );
+    } else if (error) {
         return <p>{error}</p>;
-    }else{
-        return(
-            <div>
+    } else {
+        return (
+            <Container className="my-4">
                 <Helmet>
-                    <title>Productos | Mi Tienda</title>
+                    <title>Yolo Ceramics | Mi Tienda</title>
                     <meta name="description" content="Explora nuestra variedad de productos." />
                 </Helmet>
-                <div className="input-group mb-3 mt-3">
+
+                {/* Input de búsqueda */}
+                <div className="input-group mb-4">
                     <span className="input-group-text">
                         <FaSearch />
                     </span>
@@ -65,32 +67,35 @@ function ProductosContainer({}){
                         onChange={(e) => setFiltro(e.target.value)}
                     />
                 </div>
-                <Row xs={1} md={2} lg={4} className="g-4">{/*Grid nde boostrap*/ }
-                    {productosActuales.length > 0 ? productosActuales.map((producto) => (
-                        <Col>
-                            <CardProducto
-                                producto={producto}
-                            />
-                        </Col>
-                    )): <></>}
+
+                {/* Grilla de productos */}
+                <Row xs={1} sm={2} md={3} lg={4} className="g-4">
+                    {productosActuales.length > 0 ? (
+                        productosActuales.map((producto) => (
+                            <Col key={producto.id}>
+                                <CardProducto producto={producto} />
+                            </Col>
+                        ))
+                    ) : (
+                        <p className="text-center">No se encontraron productos.</p>
+                    )}
                 </Row>
-                <div className="d-flex justify-content-center my-4"> {/*Componente de paginacion*/ }
+
+                {/* Paginación */}
+                <div className="d-flex justify-content-center my-4 flex-wrap">
                     {Array.from({ length: totalPaginas }, (_, index) => (
-                    <button
-                        key={index + 1}
-                        className={`btn mx-1 ${paginaActual === index + 1 ? "btn-primary" : "btn-outline-primary"}`}
-                        onClick={() => cambiarPagina(index + 1)}
-                    >
-                        {index + 1}
-                    </button>
+                        <button
+                            key={index + 1}
+                            className={`btn mx-1 mb-2 ${paginaActual === index + 1 ? "btn-primary" : "btn-outline-primary"}`}
+                            onClick={() => cambiarPagina(index + 1)}
+                        >
+                            {index + 1}
+                        </button>
                     ))}
                 </div>
-            </div>
+            </Container>
         )
     }
-
-    
 }
 
 export default ProductosContainer
-

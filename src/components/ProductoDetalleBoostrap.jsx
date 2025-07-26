@@ -5,18 +5,17 @@ import { dispararSweetBasico } from "../assets/SweetAlert";
 import { CarritoContext } from "../contexts/CarritoContext";
 import { useAuthContext } from "../contexts/AuthContext";
 import { useProductosContext } from "../contexts/ProductosContext";
-import Producto from "./BotonCompra";
 import { Button } from "react-bootstrap";
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
-function ProductoDetalleBoostrap({}) {
+function ProductoDetalleBoostrap({ }) {
 
   const navegar = useNavigate();
 
-  const {admin} = useAuthContext();
-  const {agregarAlCarrito} = useContext(CarritoContext);
-  const {productoEncontrado, obtenerProducto, eliminarProducto} = useProductosContext();
+  const { admin } = useAuthContext();
+  const { agregarAlCarrito } = useContext(CarritoContext);
+  const { productoEncontrado, obtenerProducto, eliminarProducto } = useProductosContext();
 
   const { id } = useParams();
   //const [producto, setProducto] = useState(null);
@@ -28,10 +27,10 @@ function ProductoDetalleBoostrap({}) {
     obtenerProducto(id).then(() => {
       setCargando(false);
     }).catch((error) => {
-      if(error == "Producto no encontrado"){
+      if (error == "Producto no encontrado") {
         setError("Producto no encontrado")
       }
-      if(error == "Hubo un error al obtener el producto."){
+      if (error == "Hubo un error al obtener el producto.") {
         setError("Hubo un error al obtener el producto.");
       }
       setCargando(false);
@@ -47,7 +46,7 @@ function ProductoDetalleBoostrap({}) {
     dispararSweetBasico("Producto Agregado", "El producto fue agregado al carrito con éxito", "success", "Cerrar");
   }
 
-  function dispararEliminar(){
+  function dispararEliminar() {
     eliminarProducto(id).then(() => {
       navegar("/productos")
     }).catch((error) => {
@@ -69,7 +68,7 @@ function ProductoDetalleBoostrap({}) {
 
   return (
     <div className="detalle-container">
-      <Row xs= {1} md={2} lg={2} >
+      <Row xs={1} md={2} lg={2} >
         <Col>
           <img className="detalle-imagen" src={productoEncontrado.imagen} alt={productoEncontrado.name} />
         </Col>
@@ -83,7 +82,7 @@ function ProductoDetalleBoostrap({}) {
               <span>{cantidad}</span>
               <button onClick={sumarContador}>+</button>
             </div>
-            {admin ? <Link to={"/admin/editarProducto/" + id}> <Button >Editar Producto</Button></Link> : <Button onClick={funcionCarrito}>Agregar al carrito</Button> }
+            {admin ? <Link to={"/admin/editarProducto/" + id}> <Button >Editar Producto</Button></Link> : <Button onClick={funcionCarrito}>Agregar al carrito</Button>}
             {admin ? <button onClick={dispararEliminar} >Eliminar Producto</button> : <></>}
           </div>
         </Col>

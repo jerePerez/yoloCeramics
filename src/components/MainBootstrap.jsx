@@ -6,16 +6,16 @@ function MainBootstrap() {
       <Row className="align-items-center">
         <Col xs={12} md={4} lg={4}>
           <Image
-            src="https://www.uship.com/learn/ca/wp-content/uploads/sites/3/thumbnail-placeholder-300x200-300x200.png"
+            src="../public/imagenes/llamita.jpg"
             alt="Imagen ilustrativa"
             fluid
             rounded
           />
         </Col>
         <Col xs={12} md={8} lg={8}>
-          <h2>Contenido Principal Actualizado</h2>
+          <h2>Un toque de estilo</h2>
           <p>
-            Este es un ejemplo de contenido dentro del área principal.
+            En nuestra tienda, cada pieza cuenta una historia. Nos especializamos en crear productos únicos de cerámica hechos a mano, fusionando tradición y diseño contemporáneo. Cada creación es un reflejo de dedicación, pasión y arte. Explorá nuestra colección y llevá a tu hogar el encanto y la calidez de lo hecho a mano. Descubrí el arte que transforma espacios y conecta con la esencia de la cerámica artesanal.
           </p>
         </Col>
       </Row>
